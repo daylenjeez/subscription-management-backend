@@ -1,4 +1,4 @@
-import {
+import type {
 	Currency,
 	ServiceType,
 	SubscriptionStatus,
@@ -6,6 +6,11 @@ import {
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { PresetService } from "./preset-service.entity";
 import type { Decimal } from "decimal.js";
+import {
+	CURRENCIES,
+	SERVICE_TYPES,
+	SUBSCRIPTION_STATUSES,
+} from "@/constants/enum";
 
 @Entity("subscriptions")
 export class Subscription extends BaseEntity {
@@ -15,7 +20,7 @@ export class Subscription extends BaseEntity {
 	// 订阅的服务类型
 	@Column({
 		type: "enum",
-		enum: ServiceType,
+		enum: SERVICE_TYPES,
 	})
 	service: ServiceType;
 
@@ -46,16 +51,16 @@ export class Subscription extends BaseEntity {
 	// 货币
 	@Column({
 		type: "enum",
-		enum: Currency,
-		default: Currency.CNY,
+		enum: CURRENCIES,
+		default: CURRENCIES.CNY,
 	})
 	currency: Currency;
 
 	// 状态
 	@Column({
 		type: "enum",
-		enum: SubscriptionStatus,
-		default: SubscriptionStatus.ACTIVE,
+		enum: SUBSCRIPTION_STATUSES,
+		default: SUBSCRIPTION_STATUSES.ACTIVE,
 	})
 	status: SubscriptionStatus;
 
