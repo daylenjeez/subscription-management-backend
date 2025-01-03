@@ -33,6 +33,15 @@ export const CreateSubscriptionSchema = Type.Object({
 // 生成 TypeScript 类型
 export type CreateSubscriptionType = Static<typeof CreateSubscriptionSchema>;
 
+//编辑订阅的请求结构
+export const EditSubscriptionSchema = Type.Object({
+	...CreateSubscriptionSchema.properties,
+	id: Type.String({ format: "uuid" }),
+});
+
+// 生成 TypeScript 类型
+export type EditSubscriptionType = Static<typeof EditSubscriptionSchema>;
+
 //返回订阅信息
 export const SubscriptionResponseSchema = Type.Object({
 	id: Type.String({ format: "uuid" }),

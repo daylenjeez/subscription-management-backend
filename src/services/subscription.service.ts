@@ -1,5 +1,6 @@
 import type {
 	CreateSubscriptionType,
+	EditSubscriptionType,
 	SubscriptionResponseDTO,
 } from "@/dtos/subscription.dto";
 import type { Subscription } from "@/entities/subscription.entity";
@@ -27,10 +28,7 @@ export class SubscriptionService {
 		return this.subscriptionRepo.save(subscription);
 	}
 
-	async modify(
-		id: string,
-		data: CreateSubscriptionType,
-	): Promise<Subscription> {
+	async modify(id: string, data: EditSubscriptionType): Promise<Subscription> {
 		const subscription = await this.findOne(id);
 		return this.subscriptionRepo.save({ ...subscription, ...data });
 	}
