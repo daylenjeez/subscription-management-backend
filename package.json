@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@fastify/type-provider-typebox": "^5.1.0",
+    "@sinclair/typebox": "^0.34.13",
+    "fastify": "^5.2.0"
+  }
+}
