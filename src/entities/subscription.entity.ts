@@ -1,6 +1,7 @@
 import type {
 	Currency,
 	ServiceType,
+	SubscriptionPeriod,
 	SubscriptionStatus,
 } from "@/types/subscription.types";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from "typeorm";
@@ -9,6 +10,7 @@ import type { Decimal } from "decimal.js";
 import {
 	CURRENCIES,
 	SERVICE_TYPES,
+	SUBSCRIPTION_PERIODS,
 	SUBSCRIPTION_STATUSES,
 } from "@/constants/enum";
 
@@ -22,7 +24,7 @@ export class Subscription extends BaseEntity {
 		type: "enum",
 		enum: SERVICE_TYPES,
 	})
-	service: ServiceType;
+	serviceType: ServiceType;
 
 	//关联预设服务
 	@Column("uuid", { nullable: true })
@@ -32,6 +34,22 @@ export class Subscription extends BaseEntity {
 	@Column()
 	serviceName?: string;
 
+	// 服务logo（当presetServiceId为空时使用）
+	@Column()
+	serviceLogo?: string;
+
+	//订阅周期
+	@Column({
+		type: "enum",
+		enum: SUBSCRIPTION_PERIODS,
+	})
+	period: SubscriptionPeriod;
+
+	// 自定义订阅时间(天)
+	@Column({ type: "int", nullable: true })
+	customPeriod?: number;
+
+	// 开始日期
 	@Column({ type: "timestamptz" })
 	startDate: Date;
 

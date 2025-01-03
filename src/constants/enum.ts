@@ -38,6 +38,17 @@ export const SUBSCRIPTION_STATUSES = {
 	ENDED: "ENDED", // 已结束（包含过期和取消的情况）
 } as const;
 
+// 订阅周期
+export const SUBSCRIPTION_PERIODS = {
+	WEEK: "WEEK",
+	MONTH: "MONTH",
+	QUARTER: "QUARTER",
+	HALF_YEAR: "HALF_YEAR",
+	YEAR: "YEAR",
+	PERMANENT: "PERMANENT",
+	CUSTOM: "CUSTOM",
+} as const;
+
 // 生成 PostgreSQL 枚举数组
 export const getEnumValues = (enumObj: object) =>
 	Object.values(enumObj)
