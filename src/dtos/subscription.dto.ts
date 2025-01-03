@@ -1,4 +1,4 @@
-import { CURRENCIES } from "@/constants/enum";
+import { CURRENCIES, SUBSCRIPTION_PERIODS } from "@/constants/enum";
 
 import { type Static, Type } from "@sinclair/typebox";
 
@@ -32,3 +32,21 @@ export const CreateSubscriptionSchema = Type.Object({
 
 // 生成 TypeScript 类型
 export type CreateSubscriptionType = Static<typeof CreateSubscriptionSchema>;
+
+//返回订阅信息
+export const SubscriptionResponseSchema = Type.Object({
+	id: Type.String({ format: "uuid" }),
+	serviceName: Type.String(),
+	serviceLogo: Type.String(),
+	period: Type.Enum(SUBSCRIPTION_PERIODS),
+	presetServiceId: Type.Optional(Type.String({ format: "uuid" })),
+	startDate: Type.String({ format: "date-time" }),
+	amount: Type.Number({
+		multipleOf: 0.01, // 限制小数位数为2位
+		minimum: 0, // 金额不能为负
+	}),
+	currency: Type.Enum(CURRENCIES),
+});
+
+// 生成 TypeScript 类型
+export type SubscriptionResponseDTO = Static<typeof SubscriptionResponseSchema>;

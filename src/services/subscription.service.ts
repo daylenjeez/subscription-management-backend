@@ -1,6 +1,23 @@
-import type { CreateSubscriptionType } from "@/dtos/subscription.dto";
+import type {
+	CreateSubscriptionType,
+	SubscriptionResponseDTO,
+} from "@/dtos/subscription.dto";
 import type { Subscription } from "@/entities/subscription.entity";
 import type { Repository } from "typeorm";
+
+const getSubscriptionResponseDTO = (
+	subscription: Subscription,
+): SubscriptionResponseDTO => {
+	return {
+		...subscription,
+		amount: subscription.amount.toNumber(),
+		serviceName: (subscription.presetService?.name ??
+			subscription.serviceName) as string,
+		serviceLogo: (subscription.presetService?.logo ??
+			subscription.serviceLogo) as string,
+		startDate: subscription.startDate.toISOString(),
+	};
+};
 
 export class SubscriptionService {
 	constructor(private subscriptionRepo: Repository<Subscription>) {}
@@ -18,11 +35,26 @@ export class SubscriptionService {
 		return this.subscriptionRepo.save({ ...subscription, ...data });
 	}
 
-	async findAll(): Promise<Subscription[]> {
-		return this.subscriptionRepo.find();
+	async findAll(): Promise<SubscriptionResponseDTO[]> {
+		const subscriptions = await this.subscriptionRepo.find({
+			relations: ["presetService"], // 关联预设服务信息
+		});
+
+		return subscriptions.map((subscription) =>
+			getSubscriptionResponseDTO(subscription),
+		);
 	}
 
-	async findOne(id: string): Promise<Subscription> {
-		return this.subscriptionRepo.findOneOrFail({ where: { id } });
+	async findOne(id: string): Promise<SubscriptionResponseDTO> {
+		const subscription = await this.subscriptionRepo.findOne({
+			where: { id },
+			relations: ["presetService"],
+		});
+
+		if (!subscription) {
+			throw new Error("Subscription not found");
+		}
+
+		return getSubscriptionResponseDTO(subscription);
 	}
 }

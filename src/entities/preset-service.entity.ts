@@ -7,6 +7,9 @@ export class PresetService extends BaseEntity {
 	@Column()
 	name: string;
 
+	@Column()
+	logo: string;
+
 	// 服务类型
 	@Column({
 		type: "enum",
