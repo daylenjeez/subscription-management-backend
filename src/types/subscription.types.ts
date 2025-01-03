@@ -31,3 +31,9 @@ export enum Currency {
 	TRY = "TRY",
 	KRW = "KRW",
 }
+
+// 订阅状态
+export enum SubscriptionStatus {
+	ACTIVE = "ACTIVE", // 活跃中
+	ENDED = "ENDED", // 已结束（包含过期和取消的情况）
+}

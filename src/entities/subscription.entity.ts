@@ -1,4 +1,8 @@
-import { Currency, ServiceType } from "@/types/subscription.types";
+import {
+	Currency,
+	ServiceType,
+	SubscriptionStatus,
+} from "@/types/subscription.types";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { PresetService } from "./preset-service.entity";
 import type { Decimal } from "decimal.js";
@@ -26,6 +30,10 @@ export class Subscription extends BaseEntity {
 	@Column({ type: "timestamptz" })
 	startDate: Date;
 
+	// 结束日期
+	@Column({ type: "timestamptz", nullable: true })
+	endDate?: Date;
+
 	// 关联预设服务
 	@ManyToOne(() => PresetService, { nullable: true })
 	@JoinColumn({ name: "presetServiceId" })
@@ -42,4 +50,16 @@ export class Subscription extends BaseEntity {
 		default: Currency.CNY,
 	})
 	currency: Currency;
+
+	// 状态
+	@Column({
+		type: "enum",
+		enum: SubscriptionStatus,
+		default: SubscriptionStatus.ACTIVE,
+	})
+	status: SubscriptionStatus;
+
+	// 可以添加一个字段记录结束原因
+	@Column({ nullable: true })
+	endReason?: "EXPIRED" | "CANCELLED"; // 可选：记录是因为过期还是主动取消
 }
