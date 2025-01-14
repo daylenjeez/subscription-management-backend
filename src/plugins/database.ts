@@ -1,4 +1,4 @@
-import { Subscription } from "@/entities/subscription.entity";
+import { Subscription } from "../entities/subscription.entity";
 import fp from "fastify-plugin";
 import { DataSource } from "typeorm";
 
