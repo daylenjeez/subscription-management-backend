@@ -1,0 +1,29 @@
+# docker-compose.dev.yml - 开发环境特定配置
+version: '3.8'
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"    # 开发环境暴露端口
+    environment:
+      POSTGRES_USER: postgres          # 开发环境固定值
+      POSTGRES_PASSWORD: postgres      # 开发环境固定值
+      POSTGRES_DB: subscription_dev    # 开发数据库名
+    volumes:
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql  # 开发环境初始化脚本
+
+  redis:
+    ports:
+      - "6379:6379"    # 开发环境暴露端口
+
+  # 开发环境特有的服务
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: subscription-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - subscription-network
