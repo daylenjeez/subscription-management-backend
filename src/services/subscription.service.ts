@@ -77,7 +77,7 @@ export class SubscriptionService {
 
 		if (!subscription) {
 			throw new Error("Subscription not found");
-		} 
+		}
 
 		return getSubscriptionResponseDTO(subscription);
 	}
