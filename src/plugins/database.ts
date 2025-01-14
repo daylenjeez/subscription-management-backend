@@ -1,4 +1,3 @@
-import { Subscription } from "../entities/subscription.entity";
 import fp from "fastify-plugin";
 import { DataSource } from "typeorm";
 
@@ -12,13 +11,15 @@ declare module "fastify" {
 export default fp(async (fastify) => {
 	const dataSource = new DataSource({
 		type: "postgres",
-		host: process.env.DB_HOST,
-		port: Number.parseInt(process.env.DB_PORT || "5432"),
-		username: process.env.DB_USERNAME,
-		password: process.env.DB_PASSWORD,
-		database: process.env.DB_DATABASE,
-		entities: [Subscription],
-		synchronize: false,
+		host: process.env.DATABASE_HOST,
+		port: parseInt(process.env.DATABASE_PORT || "5432"),
+		username: process.env.DATABASE_USER,
+		password: process.env.DATABASE_PASSWORD,
+		database: process.env.DATABASE_NAME,
+		synchronize: process.env.NODE_ENV !== 'production', // 生产环境建议关闭
+		logging: process.env.NODE_ENV !== 'production',
+		entities: ["src/entities/**/*.ts"],
+		migrations: ["src/migrations/**/*.ts"],
 	});
 
 	await dataSource.initialize();
