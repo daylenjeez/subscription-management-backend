@@ -1,10 +1,11 @@
 import type {
 	CreateSubscriptionType,
 	EditSubscriptionType,
+	QuerySubscriptionListType,
 	SubscriptionResponseDTO,
 } from "@/dtos/subscription.dto";
 import type { Subscription } from "@/entities/subscription.entity";
-import type { Repository } from "typeorm";
+import { Like, type Repository } from "typeorm";
 
 const getSubscriptionResponseDTO = (
 	subscription: Subscription,
@@ -33,8 +34,12 @@ export class SubscriptionService {
 		return this.subscriptionRepo.save({ ...subscription, ...data });
 	}
 
-	async findAll(): Promise<SubscriptionResponseDTO[]> {
+	async findAll(params: QuerySubscriptionListType): Promise<SubscriptionResponseDTO[]> {
 		const subscriptions = await this.subscriptionRepo.find({
+			where: {
+				serviceName: params.name ? Like(`%${params.name}%`) : undefined,
+				serviceType: params.type,
+			},
 			relations: ["presetService"], // 关联预设服务信息
 		});
 

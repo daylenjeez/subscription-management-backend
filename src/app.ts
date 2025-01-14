@@ -1,7 +1,7 @@
 // src/app.ts
 import fastify from "fastify";
 import database from "./plugins/database";
-import subscriptionRoutes from "./controllers/subscription.controller";
+import routes from "./routes";
 
 async function bootstrap() {
 	const app = fastify();
@@ -10,7 +10,7 @@ async function bootstrap() {
 	await app.register(database);
 
 	// 注册路由
-	await app.register(subscriptionRoutes);
+	await app.register(routes);
 
 	try {
 		await app.listen({ port: 3000 });

@@ -1,4 +1,4 @@
-import { CURRENCIES, SUBSCRIPTION_PERIODS } from "@/constants/enum";
+import { CURRENCIES, SERVICE_TYPES, SUBSCRIPTION_PERIODS } from "@/constants/enum";
 
 import { type Static, Type } from "@sinclair/typebox";
 
@@ -22,7 +22,7 @@ export const CreateSubscriptionSchema = Type.Object({
 	serviceName: Type.String(),
 
 	// 订阅周期
-	startDate: Type.String({ format: "date-time" }),
+	startDate: Type.String({ format: "date" }),
 	// endDate: Type.String({ format: "date-time" }),
 
 	// 金额信息
@@ -59,3 +59,12 @@ export const SubscriptionResponseSchema = Type.Object({
 
 // 生成 TypeScript 类型
 export type SubscriptionResponseDTO = Static<typeof SubscriptionResponseSchema>;
+
+//查询订阅列表的请求结构
+export const QuerySubscriptionListSchema = Type.Object({
+	name: Type.Optional(Type.String()),
+	type: Type.Optional(Type.Enum(SERVICE_TYPES)),
+});
+
+// 生成 Typescript类型
+export type QuerySubscriptionListType = Static<typeof QuerySubscriptionListSchema>

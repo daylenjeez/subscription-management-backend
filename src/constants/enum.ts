@@ -16,9 +16,6 @@ export const SERVICE_TYPES = {
 	INTERNET: "INTERNET", // 网络服务（宽带，手机套餐）
 	MEMBERSHIP: "MEMBERSHIP", // 会员服务（商场会员，迪士尼年卡）
 	EDUCATION: "EDUCATION", // 教育服务（Coursera, Udemy, 线下课程）
-
-	// 自定义
-	CUSTOM: "CUSTOM", // 其他自定义服务
 } as const;
 
 //货币
