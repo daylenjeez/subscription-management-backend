@@ -157,20 +157,20 @@ export class SubscriptionService {
     return targetDate.toDate();
   }
 
-}
-
 	/**
-   * 计算下次订阅时间
-   */
-	// 	calculateNextBillingDate(startDate: Date, period: SubscriptionPeriod): Date {
-	// 		switch (period) {
-	// 			case SUBSCRIPTION_PERIODS.MONTH:
-	// 				return this.getMonthNextBillingDate(startDate)
-
-	// 				case SUBSCRIPTION_PERIODS.QUARTER:
-	// 					const quarter = dayjs(startDate).quarter();
-	// 					//获取这个季度几号订阅
-	// 					const dateOfQuarter = dayjs().quarter(quarter).date();
-	// 		}
-	// }
+	 * 获取下次订阅时间
+	 */
+	calculateNextBillingDate(startDate: Date, period: SubscriptionPeriod): Date|undefined {
+		switch (period) {
+			case SUBSCRIPTION_PERIODS.MONTH:
+				return this.getMonthNextBillingDate(startDate)
+				case SUBSCRIPTION_PERIODS.QUARTER:
+					return this.getNextQuarterDate(startDate)
+				case SUBSCRIPTION_PERIODS.HALF_YEAR:
+					return this.getHalfYearNextBillingDate(startDate)
+				case SUBSCRIPTION_PERIODS.YEAR:
+					return this.getYearNextBillingDate(startDate)
+		}
+	}
+}
 
