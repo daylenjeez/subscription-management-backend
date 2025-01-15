@@ -2,6 +2,9 @@
 import fastify from "fastify";
 import database from "./plugins/database";
 import routes from "./routes";
+import dayjs from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
+dayjs.extend(quarterOfYear);
 
 async function bootstrap() {
 	const app = fastify();

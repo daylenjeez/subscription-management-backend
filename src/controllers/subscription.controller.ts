@@ -35,4 +35,17 @@ export default async function subscriptionRoutes(fastify: FastifyInstance) {
 			return reply.code(200).send(subscriptions);
 		}
 	});
+
+	//获取即将订阅的列表
+	server.get("/subscriptions/upcoming",{
+		schema:{
+			params:QuerySubscriptionListSchema
+		},
+		handler:async(request,reply)=>{
+			const subscriptionRepo = fastify.db.getRepository(Subscription);
+			const subscriptionService = new SubscriptionService(subscriptionRepo);
+			const subscriptions = await subscriptionService.findUpcoming(request.params);
+			return reply.code(200).send(subscriptions);
+		}
+	});
 }
