@@ -7,7 +7,6 @@ import type {
 } from "@/dtos/subscription.dto";
 import type { Subscription } from "@/entities/subscription.entity";
 import { SubscriptionPeriod } from "@/types/subscription.types";
-import { calculateTimeDifference } from "@/utils/date";
 import dayjs from "dayjs";
 import { Like,  type Repository } from "typeorm";
 
